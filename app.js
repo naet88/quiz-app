@@ -45,12 +45,14 @@ function nextQuestion(state) {
 // The HTML should reflect the state. 
 //You should have a single function for each part of the page which you want to update. 
 
-function renderBeginPage(state, element) {
+//initially I had (state, element) <--not sure why I did this. 
+function renderBeginPage(state) {
 	$('.question-page').hide();
 	$('.answer-page').hide();
 }
 
-function renderQuestionPage(state, element) {
+//initially I had (state, element) <--not sure why I did this. 
+function renderQuestionPage(state) {
 	$('.question-page').show();
 	$('.begin-quiz-page').hide();
 	$('.answer-page').hide();
@@ -74,20 +76,17 @@ function renderQuestions(state, element) {
 
 //begin quiz form submission 
 
-$('button.form-start').on('submit', function(event) {
+$('form').on('submit', function(event) {
 	event.preventDefault();
 	nextPage(state);
-	renderQuestionPage(state, element);
+	renderQuestionPage(state);
 })
 
-// $('button.form-start').on('submit', function(event) {
 
-
-// })
 renderBeginPage();
 
 
-console.log(config.questions[questionIndex].question);
+renderQuestions();
 
 
 
