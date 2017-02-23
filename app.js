@@ -23,7 +23,7 @@ var config = {
 }
 
 //state = should be the initial state of the app (at first)
-
+//state is the 'memory' of the application, and it evolves as the app progresses.
 
 var state = {
 	question: 0,
@@ -46,26 +46,20 @@ function nextQuestion(state) {
 //You should have a single function for each part of the page which you want to update. 
 
 //initially I had (state, element) <--not sure why I did this. 
-function renderBeginPage(state) {
-	$('.question-page').hide();
-	$('.answer-page').hide();
-}
-
-//initially I had (state, element) <--not sure why I did this. 
-function renderQuestionPage(state) {
-	$('.question-page').show();
-	$('.begin-quiz-page').hide();
-	$('.answer-page').hide();
-
+function renderPage(state, pageName) {
+	$('.page').hide();
+	$('.' + pageName +'-page').show();
 }
 
 var questionIndex = 0
 function renderQuestions(state) {
 	var currentQuestion = config.questions[questionIndex].question;
-	console.log(currentQuestion);
 	$('h2.current-question').text(currentQuestion); 
 }
 
+// function renderAnswerChoices(state) {
+
+// }
 // var renderList = function(state, element) {
 //     var itemsHTML = state.items.map(function(item) {
 //         return '<li>' + item + '</li>';
@@ -77,15 +71,21 @@ function renderQuestions(state) {
 
 //begin quiz form submission 
 
-$('form').on('submit', function(event) {
+$('form[name="begin-quiz"]').on('submit', function(event) {
 	event.preventDefault();
 	nextPage(state);
-	renderQuestionPage(state);
+	renderPage(state, 'question');
 	renderQuestions(state);
 })
 
+$('form[name="submit-answer"]').on('submit', function(event) {
+	event.preventDefault();
+	// nextPage(state);
+	// renderQuestionPage(state);
+	// renderQuestions(state);
+})
 
-renderBeginPage();
+renderPage(state, 'begin-quiz');
 
 
 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="utf-8" />
   <title>Fill in the Trump Quotes Quiz</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
@@ -12,7 +13,7 @@
 
   <div class="container">
 
-    <div class="begin-quiz-page">
+    <div class="begin-quiz-page page">
       
       <h1>Fill in the Trump Quotes Quiz</h1>
       <p>...because he's just so quotable.</p>
@@ -24,9 +25,9 @@
 
     </div>
 
-    <div class="question-page">
+    <div class="question-page page">
       <h2 class="current-question"></h2>
-        <form>
+        <form name="submit-answer">
 
           <ul>
             
@@ -38,8 +39,13 @@
         </form>
     </div>
 
-    <div class="answer-page">
+    <div class="answer-page page">
+      Sample answer page 
     </div>
+
+  <div class="score-page page">
+    sample score page
+    </div>    
    
   </div>
   <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
