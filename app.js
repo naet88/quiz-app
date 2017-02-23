@@ -60,8 +60,9 @@ function renderQuestionPage(state) {
 }
 
 var questionIndex = 0
-function renderQuestions(state, element) {
+function renderQuestions(state) {
 	var currentQuestion = config.questions[questionIndex].question;
+	console.log(currentQuestion);
 	$('h2.currentQuestion').text(currentQuestion); 
 }
 
@@ -80,13 +81,13 @@ $('form').on('submit', function(event) {
 	event.preventDefault();
 	nextPage(state);
 	renderQuestionPage(state);
+	renderQuestions(state);
 })
 
 
 renderBeginPage();
 
 
-renderQuestions();
 
 
 
