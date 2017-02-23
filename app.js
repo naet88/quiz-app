@@ -63,7 +63,7 @@ var questionIndex = 0
 function renderQuestions(state) {
 	var currentQuestion = config.questions[questionIndex].question;
 	console.log(currentQuestion);
-	$('h2.currentQuestion').text(currentQuestion); 
+	$('h2.current-question').text(currentQuestion); 
 }
 
 // var renderList = function(state, element) {
