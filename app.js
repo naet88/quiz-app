@@ -10,7 +10,7 @@ var config = {
 		},
 		{
 			question: 'Trump tweeted, "All of the women on _________ flirted with me – consciously or unconsciously. That’s to be expected.” - What terrible show is he talking about?', 
-			choices: ['The View', 'some rando Mexican show', 'The Apprentice', 'Fox News'],
+			choices: ['The View', 'Jimmy Fallon', 'The Apprentice', 'Fox News'],
 			correct: 2,
 		}
 	],
@@ -26,7 +26,7 @@ var config = {
 //state is the 'memory' of the application, and it evolves as the app progresses.
 
 var state = {
-	question: 0,
+	question: 0,	
 	page: 0,
 }
 
@@ -40,32 +40,47 @@ function nextQuestion(state) {
 	state.question = state.question + 1;
 }
 
+// function nextAnswerChoices(state) {
+// 	state.
+// }
+
 //step 3: Render in the DOM functions
 //all render functions should end w/ this: element.html(itemsHTML);
 // The HTML should reflect the state. 
 //You should have a single function for each part of the page which you want to update. 
 
-//initially I had (state, element) <--not sure why I did this. 
-function renderPage(state, pageName) {
-	$('.page').hide();
-	$('.' + pageName +'-page').show();
-}
+function renderPage(state, element, pageName) {
+	$(element).find('.page').hide();
+	$(element).find('.' + pageName +'-page').show();
+};
 
-var questionIndex = 0
-function renderQuestions(state) {
+function renderQuestion(state, element, questionIndex) {
 	var currentQuestion = config.questions[questionIndex].question;
-	$('h2.current-question').text(currentQuestion); 
+	console.log('currrent question is' + currentQuestion);
+	$(element).find('h2.current-question').text(currentQuestion); 
+};
+
+function renderAnswerChoices(state, element, questionIndex) {
+	var currentAnswerChoices = config.questions[questionIndex].choices;
+	
+	currentAnswerChoices.map(function(choice) {
+		var output = '';
+		output = '<li><input type="radio"/>' + choice + '</li>';
+		//$('ul.answer-choices').append(output)
+		$(element).append(output);
+	});
+};
+
+function questionProgress(state, element, questionIndex) {
+	var questionCounter = state.question+1;
+	$(element).find('.question-progress').text('question ' + questionCounter + '/5'); 
 }
 
-// function renderAnswerChoices(state) {
 
-// }
-// var renderList = function(state, element) {
-//     var itemsHTML = state.items.map(function(item) {
-//         return '<li>' + item + '</li>';
-//     });
-//     element.html(itemsHTML);
-// };
+function renderAnswerPage(state, element, questionIndex) {
+
+
+}
 
 //step 4: jquery event listeners. 
 
@@ -74,18 +89,40 @@ function renderQuestions(state) {
 $('form[name="begin-quiz"]').on('submit', function(event) {
 	event.preventDefault();
 	nextPage(state);
-	renderPage(state, 'question');
-	renderQuestions(state);
-})
+	renderPage(state, $('.pages'),'question');
+	renderQuestion(state, $('.question-page'), 0);
+	renderAnswerChoices(state, $('ul.answer-choices'), 0);
+	questionProgress(state, $('.question-page'), 0);
+
+});
 
 $('form[name="submit-answer"]').on('submit', function(event) {
 	event.preventDefault();
+	renderPage(state, $('.pages'),'answer');
+	// renderQuestion(state, $('.question-page'), state.question);
 	// nextPage(state);
-	// renderQuestionPage(state);
-	// renderQuestions(state);
-})
+	// console.log(state);
+});
 
-renderPage(state, 'begin-quiz');
+$('button.next-question').on('click', function(event) {
+	event.preventDefault();
+	nextPage(state);
+	nextQuestion(state);
+	renderPage(state, $('.pages'),'question');
+	renderQuestion(state, $('.question-page'), state.question);
+	renderAnswerChoices(state, $('ul.answer-choices'), state.question);
+	questionProgress(state, $('.question-page'), state.question);
+	//use reset()
+});
+
+
+
+// $('form#question-form').on('submit', function(event) {
+//    // console.log(event.currentTarget);
+//    console.log(event.currentTarget); 
+// });
+
+renderPage(state, $('.pages'), 'begin-quiz');
 
 
 

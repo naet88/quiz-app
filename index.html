@@ -11,7 +11,7 @@
 </head>
 <body>
 
-  <div class="container">
+  <div class="pages">
 
     <div class="begin-quiz-page page">
       
@@ -27,21 +27,25 @@
 
     <div class="question-page page">
       <h2 class="current-question"></h2>
-        <form name="submit-answer">
+        <form id="question-form" name="submit-answer">
 
-          <ul>
+          <ul class="answer-choices">
             
 
           </ul>
 
           <button type="submit">Next one</button>
 
+          <div class="question-progress"></div>
         </form>
     </div>
 
     <div class="answer-page page">
-      Sample answer page 
+       
+    <button class="next-question" type="submit">Next question</button>   
     </div>
+
+
 
   <div class="score-page page">
     sample score page
