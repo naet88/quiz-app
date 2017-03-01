@@ -26,12 +26,21 @@ button:hover {
 button.form-start {
   margin-top: 20px;
 }
-/*
-.shopping-list {
+
+.answer-choices {
   list-style: none;
   padding-left: 0;
 }
 
+input[type="radio"] {
+  margin-right: 10px;
+}
+
+button {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+/*
 .shopping-list > li {
   margin-bottom: 20px;
   border: 1px solid grey;
