@@ -93,7 +93,7 @@ function renderAnswerChoices(state, element) {
 	$(element).html(''); //clears previous entry
 	currentAnswerChoices.map(function(choice) {
 		var output;
-		output = '<li><input name="trump-quotes" value="' + choice + '"' + 'type="radio"/>' + choice + '</li>';
+		output = '<li><input name="trump-quotes" value="' + choice + '"' + 'type="radio" required/>' + choice + '</li>';
 		//$('ul.answer-choices').append(output)
 		$(element).append(output);
 	});
