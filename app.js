@@ -46,6 +46,7 @@ var state = {
 	page: 0,
 	answerCorrect: false,
 	answerCorrectCounter: 0,
+	userAnswer: '',
 }
 
 //step 2: functions that modify the state (no jquery here)
@@ -56,6 +57,10 @@ function nextPage(state) {
 
 function nextQuestion(state) {
 	state.question = state.question + 1;
+}
+
+function updateUserAnswer(state, userAnswer) {
+	state.userAnswer = userAnswer;
 }
 
 function updateAnswerCorrect(state, answer) {
@@ -88,16 +93,28 @@ function renderQuestion(state, element) {
 	$(element).find('h2.current-question').text(currentQuestion); 
 };
 
+// function renderAnswerChoices(state, element) {
+// 	var currentAnswerChoices = config.questions[state.question].choices;
+// 	$(element).html(''); //clears previous entry
+// 	currentAnswerChoices.map(function(choice) {
+// 		var output;
+// 		output = output + '<li><input name="trump-quotes" value="' + choice + '"' + 'type="radio" required/>' + choice + '</li>';
+// 		//$('ul.answer-choices').append(output)
+// 		$(element).append(output);
+// 	});
+// };
+
+
+//alternative
+
 function renderAnswerChoices(state, element) {
 	var currentAnswerChoices = config.questions[state.question].choices;
-	$(element).html(''); //clears previous entry
+	var output = '';
 	currentAnswerChoices.map(function(choice) {
-		var output;
-		output = '<li><input name="trump-quotes" value="' + choice + '"' + 'type="radio" required/>' + choice + '</li>';
-		//$('ul.answer-choices').append(output)
-		$(element).append(output);
+		output = output + '<li><input name="trump-quotes" value="' + choice + '"' + 'type="radio" required/>' + choice + '</li>';
+		$(element).html(output);
 	});
-};
+}
 
 function questionProgress(state, element) {
 	var questionCounter = state.question + 1;
@@ -105,7 +122,7 @@ function questionProgress(state, element) {
 }
 
 
-function renderAnswer(state, element, answer) {
+function renderAnswer(state, element) {
 	var output;
 
 	if (state.answerCorrect) {
@@ -114,15 +131,13 @@ function renderAnswer(state, element, answer) {
 		output = config.answerComments.questionIncorrect;
 	}
 
-	$(element).text('You answered: ' + answer + '. ' + output);
+	$(element).text('You answered: ' + state.userAnswer + '. ' + output);
 }
 
 function renderScore(state, element) {
 	// $(element).find('.user-score').text(state.answerCorrectCounter);
 	var finalScore = state.answerCorrectCounter;
 	$(element).text('Your final score is: ' + finalScore + '/5! Thanks for taking this test!');
-
-
 }
 
 //step 4: jquery event listeners. 
@@ -145,6 +160,7 @@ $('form[name="submit-answer"]').on('submit', function(event) {
 	var userAnswer = $(event.currentTarget).find(':checked').val(); 
 	//if (userAnswer == null)   
 	//updates the state
+	updateUserAnswer(state, userAnswer);
 	updateAnswerCorrect(state, userAnswer); 
 	renderAnswer(state, $('.answer-display'), userAnswer);
 });
